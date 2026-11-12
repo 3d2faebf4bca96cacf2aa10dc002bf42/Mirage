@@ -66,7 +66,7 @@ See [development and configuration](docs/DEVELOPMENT.md), [architecture](docs/ar
 | `client/crates/ts6-input` | Key parsing, Windows key polling, transmit gate |
 | `client/crates/ts6-cli` | Diagnostics and manual measurement commands |
 | `client/crates/ts6-bridge` | Loopback HTTP/WebSocket service and local audio orchestration |
-| `client/apps/ui` | React 19, TypeScript, Vite 7, CSS |
+| `client/apps/ui` | React 19, TypeScript 7, Vite 8, CSS |
 | `client/vendor/tsclientlib` | Tracked protocol source, separate workspace and licenses |
 | `recon/probe-ts6` | Standalone early handshake probe |
 | `docs` | Architecture, research references, verification, audit |

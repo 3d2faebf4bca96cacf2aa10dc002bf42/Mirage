@@ -18,7 +18,7 @@ See [README](README.md) and [current audit](docs/AUDIT.md) for limits and blocke
 - `ts6-input`: Windows global PTT and bounded transmit gate.
 - `ts6-cli`: manual measurement commands; no-argument invocation prints usage.
 - `ts6-bridge`: one loopback HTTP/WebSocket service, one session, audio orchestration.
-- `client/apps/ui`: React 19 + TypeScript + Vite 7; wire types in `src/types.ts`.
+- `client/apps/ui`: React 19 + TypeScript 7 + Vite 8; wire types in `src/types.ts`.
 - `client/vendor/tsclientlib`: third-party workspace; read `client/UPSTREAM.md` before changes.
 - `recon/probe-ts6`: independent early probe, outside the main workspace.
 

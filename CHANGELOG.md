@@ -17,3 +17,5 @@ No tagged releases have been established in this checkout. Entries describe repo
 - Keep separate Opus decoder state per sender in CLI measurements, add a two-stream regression, and add live TS6 bridge control verification.
 
 - Upgrade the vendored P-256/elliptic-curve stack to 0.14, resolve the crypto-bigint advisory in both lockfiles, and verify identity/crypto and live TS6 interoperability before the owner-authorized clean GitHub import.
+
+- Coordinate Vite 8, React plugin 6, and TypeScript 7 updates with a regenerated compatible lockfile; upgrade tower-http to 0.7 and the SHA-pinned checkout/setup-node Actions to version 7.
