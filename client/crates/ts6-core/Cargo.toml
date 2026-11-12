@@ -1,0 +1,26 @@
+[package]
+name = "ts6-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "TeamSpeak 6 client core: session, state snapshot, commands, events"
+
+[dependencies]
+# Vendored protocol library (upstream: ReSpeak/tsclientlib, MIT OR Apache-2.0;
+# fork base: Moepchi/tsclientlib@2e77949 which surfaces unknown TS6 commands).
+# `audio` is required: this is a voice client and the voice path is part of the
+# core (it needs libopus, built from source by audiopus_sys).
+tsclientlib = { path = "../../vendor/tsclientlib/tsclientlib", default-features = false, features = [
+    "default-tls",
+    "audio",
+] }
+# Packet-level types (OutCommand) are not re-exported by tsclientlib.
+tsproto-packets = { path = "../../vendor/tsclientlib/utils/tsproto-packets" }
+
+anyhow = "1"
+thiserror = "2"
+futures = "0.3"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "time", "sync"] }
+tracing = "0.1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"

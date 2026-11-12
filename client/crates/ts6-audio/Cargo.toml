@@ -1,0 +1,25 @@
+[package]
+name = "ts6-audio"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Audio plane for the TS6 client: Opus codec, frame sources, metering and mixing"
+
+[dependencies]
+ts6-core = { path = "../ts6-core" }
+# The audio feature of the vendored library provides the per-peer jitter buffer
+# (`tsclientlib::audio::AudioHandler`) and pulls in audiopus.
+tsclientlib = { path = "../../vendor/tsclientlib/tsclientlib", default-features = false, features = [
+    "audio",
+] }
+tsproto-packets = { path = "../../vendor/tsclientlib/utils/tsproto-packets" }
+# Same audiopus version as the vendored tsclientlib, so only one libopus is linked.
+audiopus = "0.3.0-rc.0"
+cpal = "0.18"
+tokio = { version = "1", features = ["sync"] }
+anyhow = "1"
+thiserror = "2"
+tracing = "0.1"
+
+[dev-dependencies]
+approx = "0.5"

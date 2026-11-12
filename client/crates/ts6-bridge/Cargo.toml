@@ -1,0 +1,22 @@
+[package]
+name = "ts6-bridge"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Local WebSocket bridge that owns a TS6 session and feeds the desktop UI"
+
+[dependencies]
+ts6-core = { path = "../ts6-core" }
+ts6-audio = { path = "../ts6-audio" }
+ts6-input = { path = "../ts6-input" }
+
+anyhow = "1"
+futures = "0.3"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["rt", "macros", "time", "sync", "net"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+axum = { version = "0.8", features = ["ws"] }
+tower-http = { version = "0.6", features = ["fs", "trace"] }

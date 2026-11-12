@@ -1,0 +1,63 @@
+# Build outputs
+target/
+**/target/
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+*.pdb
+*.ilk
+
+# Local testbed: official binaries, downloaded installers and extracted client
+# (docs/verification.md records versions and measurements; re-download to reproduce)
+/testbed/
+
+# Reference clones used only for protocol research (never compiled into the client)
+/vendor/ts3j/
+/vendor/astrum-ts6/
+/vendor/ts3-mobile/
+/vendor/webspeak3/
+/vendor/ts6-server-docs/
+/vendor/tsclientlib/
+/vendor/tsclientlib-webspeak3/
+# Downloaded toolchains (maven, portable cmake, opus sources)
+/vendor/tools/
+
+# Scratch probes that are not part of the client
+/recon/probe-opus/
+
+# Server runtime state
+*.sqlitedb
+*.sqlitedb-shm
+*.sqlitedb-wal
+*.msi
+licensekey.dat
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+logs/
+
+# Private configuration and identity material
+.env
+.env.*
+!.env.example
+*.local
+identity.json
+*-identity.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.sqlite
+*.sqlite3
+*.db
+*.dmp
+*.wav
+*.pcap
+*.pcapng
+__pycache__/
+.audit-local/

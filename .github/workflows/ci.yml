@@ -1,0 +1,89 @@
+name: Quality
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  windows:
+    name: Windows offline checks
+    runs-on: windows-latest
+    timeout-minutes: 30
+    env:
+      CMAKE_POLICY_VERSION_MINIMUM: '3.5'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: client/apps/ui/.node-version
+      - name: Repository policy checks
+        run: python scripts/check_repository.py
+      - name: Install the documented Rust toolchain
+        run: rustup toolchain install 1.99.0 --profile minimal --component rustfmt --component clippy
+      - name: Rust formatting
+        working-directory: client
+        run: cargo fmt -p ts6-core -p ts6-audio -p ts6-input -p ts6-cli -p ts6-bridge -- --check
+      - name: Rust lint
+        working-directory: client
+        run: cargo clippy --locked --workspace --all-targets --no-deps -- -D warnings
+      - name: Rust tests
+        working-directory: client
+        run: cargo test --locked --workspace
+      - name: Rust build
+        working-directory: client
+        run: cargo build --locked --workspace
+      - name: Standalone probe check
+        run: cargo check --locked --manifest-path recon/probe-ts6/Cargo.toml
+      - name: Reproducible UI installation
+        working-directory: client/apps/ui
+        run: npm ci --ignore-scripts
+      - name: UI type check and build
+        working-directory: client/apps/ui
+        run: npm run build
+      - name: HTTP and WebSocket security smoke test
+        run: python scripts/smoke_bridge.py --binary client/target/debug/ts6-bridge.exe
+      - name: UI dependency audit
+        working-directory: client/apps/ui
+        run: npm audit
+  rust-audit:
+    name: Rust dependency audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Install pinned audit tool
+        run: |
+          rustup toolchain install 1.99.0 --profile minimal
+          cargo install cargo-audit --version 0.23.0 --locked
+      - name: Audit client lockfile
+        run: cargo audit --file client/Cargo.lock
+      - name: Audit standalone probe lockfile
+        if: success() || failure()
+        run: cargo audit --file recon/probe-ts6/Cargo.lock
+  secrets:
+    name: Git history secret scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install checksum-pinned Gitleaks
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --silent --show-error --output "$RUNNER_TEMP/gitleaks.tar.gz" https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz
+          echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  $RUNNER_TEMP/gitleaks.tar.gz" | sha256sum --check
+          tar -xzf "$RUNNER_TEMP/gitleaks.tar.gz" -C "$RUNNER_TEMP" gitleaks
+      - name: Scan reachable history without exposing values
+        shell: bash
+        run: '"$RUNNER_TEMP/gitleaks" git --redact --no-banner --log-opts=--all .'

@@ -1,0 +1,18 @@
+[package]
+name = "probe-ts6"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+[dependencies]
+# Vendored upstream (ReSpeak/tsclientlib, MIT OR Apache-2.0).
+# default-features off: the "audio" feature pulls audiopus (native opus build),
+# which we do not need for a handshake/state probe.
+tsclientlib = { path = "../../client/vendor/tsclientlib/tsclientlib", default-features = false, features = [
+    "default-tls",
+] }
+anyhow = "1"
+futures = "0.3"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "time"] }
+tracing = "0.1"
+tracing-subscriber = "0.3"

@@ -1,0 +1,31 @@
+name: Bug report
+description: Report a reproducible problem with sanitized evidence.
+body:
+  - type: markdown
+    attributes:
+      value: Read SECURITY.md before reporting vulnerabilities. Never include credentials, identity files, or raw private logs. Write in English.
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Revision, Windows/toolchain versions, server version, and relevant device type without identifying details.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      description: Include the exact sanitized command and peer connection order for voice problems.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and observed behavior
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: Verification and sanitized evidence
+      description: Commands executed, results, and checks that failed or could not run.

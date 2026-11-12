@@ -1,0 +1,249 @@
+TeamSpeak Server
+
+
+tsserver [OPTIONS]
+
+
+OPTIONS:
+  -h,     --help              Print this help message and exit
+          --write-config-file Writes the current configuration to the config file
+          --config-file [tsserver.yaml]  (Env:TSSERVER_CONFIG_FILE)
+                              Configuration file to load
+  -v,     --version           Display program version information and exit
+          --license-path [.]  (Env:TSSERVER_LICENSE_PATH)
+                              The path to where the server will look for the server license
+          --default-voice-port, --protocols-tsudp-port :INT in [1 - 65535] [9987]  (Env:TSSERVER_DEFAULT_PORT)
+                              Sets the default voice port for the first virtual server.
+                              Subsequent virtual servers will use incrementing ports starting
+                              from the one specified here.
+          --voice-ip, --protocols-tsudp-ip [[0.0.0.0,::]]  (Env:TSSERVER_VOICE_IP)
+                              IP address for the server to bind the voice port to
+          --machine-id (Env:TSSERVER_MACHINE_ID)
+                              A string to distinguish this instance from other instances using
+                              the same database
+          --threads-voice-udp :UINT in [1 - 32] [16]  (Env:TSSERVER_VOICE_UDP_THREADS)
+                              Threads for UDP socket send/receive, shared by all packet types
+                              and virtual servers
+          --log-path [logs]  (Env:TSSERVER_LOG_PATH)
+                              Path to the directory where log files are stored
+          --log-append [0]  (Env:TSSERVER_APPEND_LOGS)
+                              Write one ever growing log file per virtual server, rather than
+                              rotating the server logs every time the instance is started
+          --log-timezone [utc]  (Env:TSSERVER_LOG_TIMEZONE)
+                              Time zone used for log timestamps. Valid values are utc, local.
+                              On Windows, local requires Windows 10 1903 / Windows Server 2022
+                              or later
+          --no-default-virtual-server [0]  (Env:TSSERVER_NO_DEFAULT_SERVER)
+                              If specified no default server is created even if no server
+                              exists in the database
+          --filetransfer-port :INT in [1 - 65535] [30033]  (Env:TSSERVER_FILE_TRANSFER_PORT)
+                              The port on which to listen for file transfer connections
+          --filetransfer-ip [[0.0.0.0,::]]  (Env:TSSERVER_FILE_TRANSFER_IP)
+                              The address on which to listen for file transfer connections
+          --clear-database [0]
+                              WARNING: If present, the database is reset to default and all
+                              servers, clients etc are lost!
+          --no-permission-update [0]  (Env:TSSERVER_SKIP_PERMISSION_UPDATE)
+                              Do not apply permission changes with a server update
+          --http-proxy (Env:TSSERVER_HTTP_PROXY)
+                              The proxy server to use for connecting to external services such
+                              as accounting
+          --accept-license :{accept->1} [0]  (Env:TSSERVER_LICENSE_ACCEPTED)
+                              Confirms you have read and accepted the server license agreement.
+                              The server will ask otherwise
+          --crashdump-path [crashdumps]  (Env:TSSERVER_CRASHDUMP_PATH)
+                              Path to store crashdumps in
+          --open-console [0]  Open a console window
+          --no-password-dialog [0]  (Env:TSSERVER_NO_PASSWORD_DIALOG)
+                              Do not show the dialog showing the server query credentials and
+                              API keys
+          --pid-file (Env:TSSERVER_PID_FILE)
+                              File in which to store the process id of the server
+          --hints-enabled [0]  (Env:TSSERVER_HINTS_ENABLED)
+                              Whether to enable permission hints. This may negatively affect
+                              performance on larger servers
+          --maxmind-db-path (Env:TSSERVER_MAXMIND_DB_PATH)
+                              Path to the MaxMind IP database
+          --administrative-domain (Env:TSSERVER_ADMINISTRATIVE_DOMAIN)
+          --enable-webrtc-server, --protocols-webrtc-enabled [1]  (Env:TSSERVER_WEBRTC_ENABLED)
+                              Enable the WebRTC server
+
+database:
+          --db-plugin [sqlite3]  (Env:TSSERVER_DATABASE_PLUGIN)
+                              Specifies which database plugin to use
+          --db-sql-path [sql]  (Env:TSSERVER_DATABASE_SQL_PATH)
+                              Path to the sql folder containing the SQL queries executed by the
+                              server
+          --db-sql-create-path [create_sqlite]  (Env:TSSERVER_DATABASE_SQL_CREATE_PATH)
+                              Path relative to the --sql-path where to load the database
+                              creation scripts from
+          --db-client-keep-days [30]  (Env:TSSERVER_DATABASE_CLIENT_KEEP_DAYS)
+                              Number of days to keep clients in the database. Clients that have
+                              no permanent group and have not connected to the server for this
+                              many days are removed from the database
+
+db-config:
+          --db-skip-integrity-check [0]  (Env:TSSERVER_DATABASE_SKIP_INTEGRITY_CHECK)
+                              SQLite only: Skip the database integrity check when opening the
+                              database
+          --db-host [127.0.0.1]  (Env:TSSERVER_DATABASE_HOST)
+                              Hostname / IP address to use when connecting to the database
+                              server
+          --db-port :INT in [1 - 65535] [5432]  (Env:TSSERVER_DATABASE_PORT)
+                              Port to use when connecting to the database server
+          --db-socket (Env:TSSERVER_DATABASE_SOCKET)
+                              The socket to use for the database connection
+          --db-timeout :INT in [1 - 432000] [10]  (Env:TSSERVER_DATABASE_TIMEOUT)
+                              Timeout in seconds for the database connection
+          --db-name [teamspeak]  (Env:TSSERVER_DATABASE_NAME)
+                              The database name to use
+          --db-username (Env:TSSERVER_DATABASE_USERNAME)
+                              The username to use for database authentication
+          --db-password (Env:TSSERVER_DATABASE_PASSWORD)
+                              The password to use for database authentication
+          --db-connections :INT in [2 - 100] [10]  (Env:TSSERVER_DATABASE_CONNECTIONS)
+                              The number of connections to establish to the database
+          --db-log-queries [0]  (Env:TSSERVER_DATABASE_LOG_QUERIES)
+                              Whether to log database queries
+
+net:
+          --socket-receive-buffer :UINT in [65536 - 67108864] [4194304]  (Env:TSSERVER_SOCKET_RECEIVE_BUFFER)
+                              UDP socket receive buffer in bytes, clamped by the kernel to
+                              net.core.rmem_max
+          --socket-send-buffer :UINT in [65536 - 67108864] [4194304]  (Env:TSSERVER_SOCKET_SEND_BUFFER)
+                              UDP socket send buffer in bytes, clamped by the kernel to
+                              net.core.wmem_max
+
+threads:
+          --threads-command :UINT in [1 - 32] [4]  (Env:TSSERVER_COMMAND_THREADS)
+                              Threads per virtual server for command packet processing
+          --threads-voice :UINT in [1 - 32] [4]  (Env:TSSERVER_VOICE_THREADS)
+                              Threads per virtual server for voice packet processing
+          --threads-ack :UINT in [1 - 32] [3]  (Env:TSSERVER_ACK_THREADS)
+                              Threads per virtual server for acknowledge packet processing
+          --threads-ping :UINT in [1 - 32] [2]  (Env:TSSERVER_PING_THREADS)
+                              Threads per virtual server for ping and pong packet processing
+          --threads-init :UINT in [1 - 32] [2]  (Env:TSSERVER_INIT_THREADS)
+                              Threads per virtual server for connection initialization packets
+          --socket-read-depth :UINT in [1 - 32] [4]  (Env:TSSERVER_SOCKET_READ_DEPTH)
+                              Concurrent receives per UDP socket, only worthwhile at high
+                              packet rates
+
+query:
+          --query-pool-size :UINT in [1 - 32] [2]  (Env:TSSERVER_QUERY_POOL_SIZE)
+                              How many threads to use for query command processing
+          --query-log-timing :INT in [0 - 31556952] [0]  (Env:TSSERVER_QUERY_LOG_TIMING)
+                              Interval in seconds after which to log query statistics, 0
+                              disables them
+          --query-ip-allow-list [query_ip_allowlist.txt]  (Env:TSSERVER_QUERY_ALLOW_LIST)
+                              File path to a file which lists the addresses that are exempt
+                              from query flood protection
+          --query-ip-block-list [query_ip_denylist.txt]  (Env:TSSERVER_QUERY_DENY_LIST)
+                              File path to a file which lists the addresses that are blocked
+                              from the query interface
+          --query-admin-password (Env:TSSERVER_QUERY_ADMIN_PASSWORD)
+                              Override the query password for the built-in serveradmin account
+                              to the specified value
+          --query-admin-api-key (Env:TSSERVER_QUERY_ADMIN_API_KEY)
+                              Set the serveradmin query API key to this value (first run
+                              creates it; later starts replace the manage-scope key)
+          --query-log-commands [0]  (Env:TSSERVER_QUERY_LOG_COMMANDS)
+                              If specified every command received on the query interface will
+                              be logged
+          --query-skip-brute-force-check [0]  (Env:TSSERVER_QUERY_SKIP_BRUTE_FORCE_CHECK)
+                              Skips brute force checking when clients connect to the query
+                              interface
+          --query-buffer-mb :INT in [20 - 100] [20]  (Env:TSSERVER_QUERY_BUFFER_MB)
+                              How much memory to allocate for query connection buffering
+          --query-documentation-path [serverquerydocs]  (Env:TSSERVER_QUERY_DOCUMENTATION_PATH)
+                              Path to the query documentation files
+          --query-timeout [300]  (Env:TSSERVER_QUERY_TIMEOUT)
+                              Specifies after how many seconds query connections time out
+
+metrics:
+          --metrics-enable [0]  (Env:TSSERVER_METRICS_ENABLED)
+                              Enable the Prometheus metrics endpoint (GET /metrics)
+          --metrics-port :INT in [1 - 65535] [9187]  (Env:TSSERVER_METRICS_PORT)
+                              Port for the Prometheus metrics endpoint
+          --metrics-ip [[127.0.0.1,::1]]  (Env:TSSERVER_METRICS_IP)
+                              Address(es) to bind the metrics endpoint to
+          --metrics-voice [0]  (Env:TSSERVER_METRICS_VOICE)
+                              Enable per-packet voice-path metrics (adds hot-path
+                              instrumentation; benchmark before enabling)
+
+query-ssh:
+          --query-ssh-enable [0]  (Env:TSSERVER_QUERY_SSH_ENABLED)
+                              Enable the SSH query interface
+          --query-ssh-port :INT in [1 - 65535] [10022]  (Env:TSSERVER_QUERY_SSH_PORT)
+                              The port on which to listen for SSH query connections
+          --query-ssh-ip [[0.0.0.0,::]]  (Env:TSSERVER_QUERY_SSH_IP)
+                              The address on which to listen for SSH query connections
+          --query-ssh-rsa-key [ssh_host_rsa_key]  (Env:TSSERVER_QUERY_SSH_RSA_KEY)
+                              The SSH RSA host key to use
+          --query-ssh-allow-guest [1]  (Env:TSSERVER_QUERY_SSH_ALLOW_GUEST)
+                              Allow unauthenticated guest sessions on the SSH query interface
+                              (user 'guest')
+
+query-http:
+          --query-http-enable [0]  (Env:TSSERVER_QUERY_HTTP_ENABLED)
+                              Enable the http query interface
+          --query-http-port :INT in [1 - 65535] [10080]  (Env:TSSERVER_QUERY_HTTP_PORT)
+                              Port on which to listen for Web Query connections
+          --query-http-ip [[0.0.0.0,::]]  (Env:TSSERVER_QUERY_HTTP_IP)
+                              Address on which to listen for Web Query connections
+          --query-http-allow-guest [1]  (Env:TSSERVER_QUERY_HTTP_ALLOW_GUEST)
+                              Allow unauthenticated guest requests (no api key, guest scope) on
+                              the http and https query interfaces
+
+query-https:
+          --query-https-enable [0]  (Env:TSSERVER_QUERY_HTTPS_ENABLED)
+                              Enable the https query interface
+          --query-https-port :INT in [1 - 65535] [10443]  (Env:TSSERVER_QUERY_HTTPS_PORT)
+                              Port on which to listen for secure Web Query connections
+          --query-https-ip [[0.0.0.0,::]]  (Env:TSSERVER_QUERY_HTTPS_IP)
+                              Address on which to listen for secure web query connections
+          --query-https-certificate (Env:TSSERVER_QUERY_HTTPS_CERT)
+                              File containing the certificate to serve for secure web query
+                              connections
+          --query-https-private-key (Env:TSSERVER_QUERY_HTTPS_PRIVATE_KEY)
+                              File containing the private key for the certificate
+
+s3ft:
+          --s3ft-enabled [0]  (Env:TSSERVER_S3FT_ENABLED)
+                              Enable S3 File Transfer
+          --s3ft-access-key (Env:TSSERVER_S3FT_ACCESS_KEY)
+                              Access Key for S3 File Transfer
+          --s3ft-secret-key (Env:TSSERVER_S3FT_SECRET_KEY)
+                              Secret Key for S3 File Transfer
+          --s3ft-bucket (Env:TSSERVER_S3FT_BUCKET)
+                              S3 Bucket
+          --s3ft-domain (Env:TSSERVER_S3FT_DOMAIN)
+                              S3 Domain
+          --s3ft-account-id (Env:TSSERVER_S3FT_ACCOUNT_ID)
+                              Optional S3 Account ID
+          --s3ft-region (Env:TSSERVER_S3FT_REGION)
+                              Region for S3 File Transfer
+          --s3ft-presigned-url-expiration [300]  (Env:TSSERVER_S3FT_PRESIGNED_URL_EXPIRATION)
+                              Expiration time for presigned URLs in seconds
+
+services:
+          --services-shared-session-secret (Env:TSSERVER_SERVICES_SHARED_SECRET)
+                              Shared Secret for internal AppService and Files Services
+          --services-websocket-queue-size-limit [4000]  (Env:TSSERVER_SERVICES_WEBSOCKET_QUERY_SIZE)
+                              Maximum queue size for the app and files service WebSocket
+                              connections
+
+services-app:
+          --services-app-websocket-url (Env:TSSERVER_SERVICES_WEBSOCKET_URL)
+                              WebSocket URL to use for the connection to the app service
+
+services-files:
+          --services-files-websocket-url (Env:TSSERVER_SERVICES_FILES_WEBSOCKET_URL)
+                              WebSocket URL for communication with the files service
+          --services-files-token-duration :INT in [10 - 432000] [60]  (Env:TSSERVER_SERVICES_FILES_TOKEN_DURATION)
+                              How long file transfer service access tokens should be valid for
+                              in seconds
+          --services-files-token-name [tsserver]  (Env:TSSERVER_SERVICES_FILES_TOKEN_NAME)
+                              The name for the file storage access token
+          --services-files-token (Env:TSSERVER_SERVICES_FILES_TOKEN)
+                              The base64 encoded access token for the files storage

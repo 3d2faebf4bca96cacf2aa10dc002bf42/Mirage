@@ -1,0 +1,18 @@
+* text=auto
+*.rs text eol=lf
+*.toml text eol=lf
+*.lock text eol=lf
+*.md text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.css text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.ps1 text eol=lf
+*.py text eol=lf
+
+# Unified diffs require context prefixes before tabs and on blank lines.
+*.patch -whitespace
+# Preserve upstream formatting; the vendor workspace is reviewed separately.
+client/vendor/** -whitespace

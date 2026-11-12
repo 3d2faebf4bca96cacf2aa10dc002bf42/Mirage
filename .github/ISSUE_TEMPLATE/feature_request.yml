@@ -1,0 +1,23 @@
+name: Feature request
+description: Propose an improvement grounded in a use case.
+body:
+  - type: markdown
+    attributes:
+      value: Write in English. Check the README for implemented features and known limitations first.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem and intended user
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior and alternatives
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Compatibility, security, and verification
+      description: Identify protocol, dependency, platform, or configuration implications and how success could be checked.

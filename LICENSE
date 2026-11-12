@@ -1,5 +1,7 @@
 MIT License
 
+Copyright (c) 2026 ts6client contributors
+
 Copyright (c) 2026 moon
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,3 +21,9 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+Third-party components retain their own terms. See client/THIRD_PARTY.md for
+notices and the scope of the dependency license review. The vendored protocol
+library is MIT OR Apache-2.0; its upstream notices are retained.

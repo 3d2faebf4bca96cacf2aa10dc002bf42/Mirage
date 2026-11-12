@@ -1,0 +1,21 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/ts6-core",
+    "crates/ts6-audio",
+    "crates/ts6-input",
+    "crates/ts6-cli",
+    "crates/ts6-bridge",
+]
+# Vendored upstream code lives in its own workspace and must not be a member here.
+exclude = ["vendor"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/3d2faebf4bca96cacf2aa10dc002bf42/Mirage"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
